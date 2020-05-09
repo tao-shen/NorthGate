@@ -11,24 +11,24 @@ mode: Rule
 
 # set log level to stdout (default is info)
 # info / warning / error / debug
-log-level: info
+#log-level: info
 
 # A RESTful API for clash
-external-controller: 127.0.0.1:9090
+#external-controller: 127.0.0.1:9090
 
 # Secret for RESTful API (Optional)
-secret: ""
+#secret: ""
 
 
-dns:
-  enable: true # set true to enable dns (default is false)
-  listen: 127.0.0.1:53
-  nameserver:
-     - 119.28.28.28
-     - 114.114.114.114
-  fallback: # concurrent request with nameserver, fallback used when GEOIP country isn't CN
-     - tls://1.0.0.1:853
-     - tls://dns.google:853
+# dns:
+#   enable: true # set true to enable dns (default is false)
+#   listen: 127.0.0.1:53
+#   nameserver:
+#      - 119.28.28.28
+#      - 114.114.114.114
+#   fallback: # concurrent request with nameserver, fallback used when GEOIP country isn't CN
+#      - tls://1.0.0.1:853
+#      - tls://dns.google:853
 
 
 Proxy:
