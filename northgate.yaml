@@ -62,9 +62,9 @@ Proxy:
 
   - name: v2ray
     type: vmess
-    server: 139.180.186.194
-    port: 8990
-    uuid: "b74a5e73-4138-4943-89c6-7b8e20a17c94"
+    server: 139.180.186.194.ipssh.net
+    port: 666
+    uuid: "24813255-228d-b0e0-c3fa-e5d4c9defda1"
     alterId: 233
     cipher: "aes-128-gcm"
 
@@ -76,8 +76,9 @@ Proxy Group:
     proxies:
         - "northgate"
         - "transfer"
-        - "trojan"
         - "v2ray"
+        - "trojan"
+        
 
 
 Rule:
