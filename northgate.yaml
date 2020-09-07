@@ -2,7 +2,7 @@
 port: 7890
 
 # port of SOCKS5
-socks-port: 1080
+socks-port: 7891
 
 allow-lan: true
 
@@ -31,16 +31,16 @@ mode: Rule
 #      - tls://dns.google:853
 
 
-Proxy:
+proxies:
 
 
-  - name: transfer
-    type: vmess
-    server: 10.214.129.192
-    port: 8990
-    uuid: "b74a5e73-4138-4943-89c6-7b8e20a17c94"
-    alterId: 233
-    cipher: "aes-128-gcm"
+  # - name: transfer
+  #   type: vmess
+  #   server: 10.214.129.192
+  #   port: 8990
+  #   uuid: "b74a5e73-4138-4943-89c6-7b8e20a17c94"
+  #   alterId: 233
+  #   cipher: "aes-128-gcm"
 
   - name: northgate
     type: vmess
@@ -54,13 +54,13 @@ Proxy:
     ws-path: "/northgate"
     tls: true
 
-  - name: trojan
-    type: trojan
-    server: trojan.saint666.ml
-    port: 443
-    password: d3c82633
+  # - name: trojan
+  #   type: trojan
+  #   server: trojan.saint666.ml
+  #   port: 443
+  #   password: d3c82633
 
-  - name: v2ray
+  - name: ipssh
     type: vmess
     server: 139.180.186.194.ipssh.net
     port: 666
@@ -70,18 +70,18 @@ Proxy:
 
  
 
-Proxy Group:
+proxy-groups:
   - name: NorthGate
     type: "select"
     proxies:
         - "northgate"
-        - "transfer"
-        - "v2ray"
-        - "trojan"
+        # - "transfer"
+        - "ipssh"
+        # - "trojan"
         
 
 
-Rule:
+rules:
 # hot fix
 - DOMAIN,services.googleapis.cn,NorthGate
 # ad tracks
