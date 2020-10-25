@@ -705,7 +705,7 @@ rules:
 - DOMAIN-SUFFIX,vivaldi.com,NorthGate
 - DOMAIN-SUFFIX,vox-cdn.com,NorthGate
 - DOMAIN-SUFFIX,vsco.co,NorthGate
-- DOMAIN-SUFFIX,vultr.com,DIRECT
+- DOMAIN,vultr.com,DIRECT
 - DOMAIN-SUFFIX,w.org,NorthGate
 - DOMAIN-SUFFIX,w3schools.com,NorthGate
 - DOMAIN-SUFFIX,webtype.com,NorthGate
