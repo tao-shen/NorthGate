@@ -82,6 +82,10 @@ proxy-groups:
 
 
 rules:
+# Tao's config
+- DOMAIN,vultr.com,DIRECT
+- DOMAIN,translate.google.com,DIRECT
+
 # hot fix
 - DOMAIN,services.googleapis.cn,NorthGate
 # ad tracks
@@ -99,6 +103,7 @@ rules:
 - DOMAIN-SUFFIX,googletagservices.com,DIRECT
 - DOMAIN,safebrowsing.googleapis.com,DIRECT
 - DOMAIN,translate.googleapis.com,DIRECT
+
 
 - DOMAIN,google.com,NorthGate
 - DOMAIN-SUFFIX,google.cn,NorthGate
@@ -705,7 +710,6 @@ rules:
 - DOMAIN-SUFFIX,vivaldi.com,NorthGate
 - DOMAIN-SUFFIX,vox-cdn.com,NorthGate
 - DOMAIN-SUFFIX,vsco.co,NorthGate
-- DOMAIN,vultr.com,DIRECT
 - DOMAIN-SUFFIX,w.org,NorthGate
 - DOMAIN-SUFFIX,w3schools.com,NorthGate
 - DOMAIN-SUFFIX,webtype.com,NorthGate
