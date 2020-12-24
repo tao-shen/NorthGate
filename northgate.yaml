@@ -85,7 +85,8 @@ rules:
 # Tao's config
 - DOMAIN,vultr.com,DIRECT
 - DOMAIN,translate.google.com,DIRECT
-
+# - DOMAIN,acm.org,DIRECT
+- DOMAIN-SUFFIX,acm.org,DIRECT
 # hot fix
 - DOMAIN,services.googleapis.cn,NorthGate
 # ad tracks
