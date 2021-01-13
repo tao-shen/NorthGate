@@ -87,6 +87,7 @@ rules:
 - DOMAIN,translate.google.com,DIRECT
 # - DOMAIN,acm.org,DIRECT
 - DOMAIN-SUFFIX,acm.org,DIRECT
+- DOMAIN-SUFFIX,springer.com,DIRECT
 # hot fix
 - DOMAIN,services.googleapis.cn,NorthGate
 # ad tracks
