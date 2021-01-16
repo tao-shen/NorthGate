@@ -1,0 +1,1084 @@
+# port of HTTP
+port: 7890
+
+# port of SOCKS5
+socks-port: 7891
+
+allow-lan: true
+
+# Rule / Global/ DIRECT (default is Rule)
+mode: Rule
+
+# set log level to stdout (default is info)
+# info / warning / error / debug
+#log-level: info
+
+# A RESTful API for clash
+#external-controller: 127.0.0.1:9090
+
+# Secret for RESTful API (Optional)
+#secret: ""
+
+
+# dns:
+#   enable: true # set true to enable dns (default is false)
+#   listen: 127.0.0.1:53
+#   nameserver:
+#      - 119.28.28.28
+#      - 114.114.114.114
+#   fallback: # concurrent request with nameserver, fallback used when GEOIP country isn't CN
+#      - tls://1.0.0.1:853
+#      - tls://dns.google:853
+
+
+proxies:
+
+
+  # - name: transfer
+  #   type: vmess
+  #   server: 10.214.129.192
+  #   port: 8990
+  #   uuid: "b74a5e73-4138-4943-89c6-7b8e20a17c94"
+  #   alterId: 233
+  #   cipher: "aes-128-gcm"
+
+  - name: northgate
+    type: vmess
+    server: tech.inorthgate.com
+    port: 443
+    uuid: "b74a5e73-4138-4943-89c6-7b8e20a17c94"
+    alterId: 233
+    cipher: "aes-128-gcm"
+    udp: true
+    network: ws
+    ws-path: "/northgate"
+    tls: true
+
+  - name: trojan
+    type: trojan
+    server: tech.taoshen.pro
+    port: 443
+    password: saint
+    sni: tech.taoshen.pro
+
+
+  - name: ipssh
+    type: vmess
+    server: 139.180.186.194.ipssh.net
+    port: 666
+    uuid: "24813255-228d-b0e0-c3fa-e5d4c9defda1"
+    alterId: 233
+    cipher: "aes-128-gcm"
+
+ 
+
+proxy-groups:
+  - name: NorthGate
+    type: "select"
+    proxies:
+        - "northgate"
+        # - "transfer"
+        - "ipssh"
+        # - "trojan"
+        - "trojan"
+        
+
+
+rules:
+# Tao's config
+- DOMAIN,vultr.com,DIRECT
+- DOMAIN,translate.google.com,DIRECT
+# - DOMAIN,acm.org,DIRECT
+- DOMAIN-SUFFIX,acm.org,DIRECT
+- DOMAIN-SUFFIX,springer.com,DIRECT
+# hot fix
+- DOMAIN,services.googleapis.cn,NorthGate
+# ad tracks
+- DOMAIN,graph.instagram.com,DIRECT
+- DOMAIN,www.googleadservices.com,DIRECT
+- DOMAIN,control.kochava.com,DIRECT
+- DOMAIN,www.google-analytics.com,DIRECT
+- DOMAIN,ssl.google-analytics.com,DIRECT
+- DOMAIN,nexus.officeapps.live.com,DIRECT
+- DOMAIN,googleads.g.doubleclick.net,DIRECT
+- DOMAIN,e.crashlytics.com,DIRECT
+- DOMAIN,ib.adnxs.com,DIRECT
+- DOMAIN-SUFFIX,googlesyndication.com,DIRECT
+- DOMAIN-SUFFIX,googletagmanager.com,DIRECT
+- DOMAIN-SUFFIX,googletagservices.com,DIRECT
+- DOMAIN,safebrowsing.googleapis.com,DIRECT
+- DOMAIN,translate.googleapis.com,DIRECT
+
+
+- DOMAIN,google.com,NorthGate
+- DOMAIN-SUFFIX,google.cn,NorthGate
+- DOMAIN-SUFFIX,googleapis.cn,NorthGate
+- DOMAIN-KEYWORD,facebook,NorthGate
+- DOMAIN-SUFFIX,fb.me,NorthGate
+- DOMAIN-SUFFIX,fbcdn.net,NorthGate
+- DOMAIN-KEYWORD,gmail,NorthGate
+- DOMAIN-KEYWORD,twitter,NorthGate
+- DOMAIN-KEYWORD,instagram,NorthGate
+- DOMAIN-SUFFIX,twimg.com,NorthGate
+- DOMAIN-KEYWORD,blogspot,NorthGate
+- DOMAIN-KEYWORD,whatsapp,NorthGate
+- DOMAIN-KEYWORD,scholar,NorthGate
+- DOMAIN,files.glados.network,NorthGate
+- DOMAIN-KEYWORD,glados,NorthGate
+
+#
+- DOMAIN-KEYWORD,youtube,NorthGate
+- DOMAIN-SUFFIX,youtu.be,NorthGate
+- DOMAIN-SUFFIX,googleNorthGate.com,NorthGate
+- DOMAIN-SUFFIX,ytimg.com,NorthGate
+- DOMAIN-SUFFIX,googleusercontent.com,NorthGate
+- DOMAIN-KEYWORD,twitch,NorthGate
+
+#NorthGate
+- DOMAIN-SUFFIX,NorthGate.com,NorthGate
+- DOMAIN-SUFFIX,NorthGate.net,NorthGate
+- DOMAIN-SUFFIX,nflxext.com,NorthGate
+- DOMAIN-SUFFIX,nflximg.com,NorthGate
+- DOMAIN-SUFFIX,nflximg.net,NorthGate
+- DOMAIN-SUFFIX,nflxso.net,NorthGate
+#Fast.com
+- DOMAIN-SUFFIX,oca.nflxNorthGate.net,NorthGate
+- DOMAIN-SUFFIX,nflxNorthGate.net,NorthGate
+
+# > ABC
+- DOMAIN-SUFFIX,edgedatg.com,NorthGate
+- DOMAIN-SUFFIX,go.com,NorthGate
+
+# > AbemaTV
+- DOMAIN,linear-abematv.akamaized.net,NorthGate
+- DOMAIN-SUFFIX,abema.io,NorthGate
+- DOMAIN-SUFFIX,abema.tv,NorthGate
+- DOMAIN-SUFFIX,akamaized.net,NorthGate
+- DOMAIN-SUFFIX,ameba.jp,NorthGate
+- DOMAIN-SUFFIX,hayabusa.io,NorthGate
+
+# > Amazon Prime NorthGate
+- DOMAIN-SUFFIX,aiv-cdn.net,NorthGate
+- DOMAIN-SUFFIX,amazonaws.com,NorthGate
+- DOMAIN-SUFFIX,amazonNorthGate.com,NorthGate
+- DOMAIN-SUFFIX,llnwd.net,NorthGate
+
+# > Bahamut
+- DOMAIN-SUFFIX,bahamut.com.tw,NorthGate
+- DOMAIN-SUFFIX,gamer.com.tw,NorthGate
+- DOMAIN-SUFFIX,hinet.net,NorthGate
+
+# > BBC
+- DOMAIN-KEYWORD,bbcfmt,NorthGate
+- DOMAIN-KEYWORD,co.uk,NorthGate
+- DOMAIN-KEYWORD,uk-live,NorthGate
+- DOMAIN-SUFFIX,bbc.co,NorthGate
+- DOMAIN-SUFFIX,bbc.co.uk,NorthGate
+- DOMAIN-SUFFIX,bbc.com,NorthGate
+- DOMAIN-SUFFIX,bbci.co,NorthGate
+- DOMAIN-SUFFIX,bbci.co.uk,NorthGate
+
+# > CHOCO TV
+- DOMAIN-SUFFIX,chocotv.com.tw,NorthGate
+
+# > Epicgames
+- DOMAIN-KEYWORD,epicgames,NorthGate
+- DOMAIN-SUFFIX,helpshift.com,NorthGate
+
+# > Fox+
+- DOMAIN-KEYWORD,foxplus,NorthGate
+- DOMAIN-SUFFIX,config.fox.com,NorthGate
+- DOMAIN-SUFFIX,emome.net,NorthGate
+- DOMAIN-SUFFIX,fox.com,NorthGate
+- DOMAIN-SUFFIX,foxdcg.com,NorthGate
+- DOMAIN-SUFFIX,foxnow.com,NorthGate
+- DOMAIN-SUFFIX,foxplus.com,NorthGate
+- DOMAIN-SUFFIX,foxplay.com,NorthGate
+- DOMAIN-SUFFIX,ipinfo.io,NorthGate
+- DOMAIN-SUFFIX,mstage.io,NorthGate
+- DOMAIN-SUFFIX,now.com,NorthGate
+- DOMAIN-SUFFIX,theplatform.com,NorthGate
+- DOMAIN-SUFFIX,urlload.net,NorthGate
+
+# > HBO && HBO Go
+- DOMAIN-SUFFIX,amazonaws.com,NorthGate
+- DOMAIN-SUFFIX,hbo.com,NorthGate
+- DOMAIN-SUFFIX,hboasia.com,NorthGate
+- DOMAIN-SUFFIX,hbogo.com,NorthGate
+- DOMAIN-SUFFIX,hbogoasia.hk,NorthGate
+
+# > Hulu
+- DOMAIN-SUFFIX,happyon.jp,NorthGate
+- DOMAIN-SUFFIX,hulu.com,NorthGate
+- DOMAIN-SUFFIX,huluim.com,NorthGate
+- DOMAIN-SUFFIX,hulustream.com,NorthGate
+
+# > Imkan
+- DOMAIN-SUFFIX,imkan.tv,NorthGate
+
+# > JOOX
+- DOMAIN-SUFFIX,joox.com,NorthGate
+
+# > MytvSUPER
+- DOMAIN-KEYWORD,nowtv100,NorthGate
+- DOMAIN-KEYWORD,rthklive,NorthGate
+- DOMAIN-SUFFIX,mytvsuper.com,NorthGate
+- DOMAIN-SUFFIX,tvb.com,NorthGate
+
+# > Pandora
+- DOMAIN-SUFFIX,pandora.com,NorthGate
+
+# > Sky GO
+- DOMAIN-SUFFIX,sky.com,NorthGate
+- DOMAIN-SUFFIX,skygo.co.nz,NorthGate
+
+# > Spotify
+- DOMAIN-KEYWORD,spotify,NorthGate
+- DOMAIN-SUFFIX,scdn.co,NorthGate
+- DOMAIN-SUFFIX,spoti.fi,NorthGate
+
+# > viuTV
+- DOMAIN-SUFFIX,viu.tv,NorthGate
+
+# > Youtube
+- DOMAIN-KEYWORD,youtube,NorthGate
+- DOMAIN-SUFFIX,googleNorthGate.com,NorthGate
+- DOMAIN-SUFFIX,gvt2.com,NorthGate
+- DOMAIN-SUFFIX,youtu.be,NorthGate
+- DOMAIN-SUFFIX,youtu.be,NorthGate
+- DOMAIN-SUFFIX,yt.be,NorthGate
+- DOMAIN-SUFFIX,ytimg.com,NorthGate
+
+# > Bilibili
+- DOMAIN-KEYWORD,bilibili,DIRECT
+- DOMAIN-SUFFIX,acg.tv,DIRECT
+- DOMAIN-SUFFIX,acgNorthGate.com,DIRECT
+- DOMAIN-SUFFIX,b23.tv,DIRECT
+- DOMAIN-SUFFIX,biliapi.com,DIRECT
+- DOMAIN-SUFFIX,biliapi.net,DIRECT
+- DOMAIN-SUFFIX,bilibili.com,DIRECT
+- DOMAIN-SUFFIX,biligame.com,DIRECT
+- DOMAIN-SUFFIX,biligame.net,DIRECT
+- DOMAIN-SUFFIX,hdslb.com,DIRECT
+- DOMAIN-SUFFIX,im9.com,DIRECT
+- DOMAIN-KEYWORD,pornhub,NorthGate
+- DOMAIN-KEYWORD,porn,NorthGate
+- DOMAIN-KEYWORD,phncdn,NorthGate
+- DOMAIN-SUFFIX,vimeo.com,NorthGate
+- DOMAIN-SUFFIX,vimeocdn.com,NorthGate
+
+
+# > IQIYI
+- DOMAIN-KEYWORD,qiyi,DIRECT
+- DOMAIN-SUFFIX,qy.net,DIRECT
+
+# > letv
+- DOMAIN-SUFFIX,letv.com,DIRECT
+
+# > NeteaseMusic
+- DOMAIN-SUFFIX,163yun.com,DIRECT
+- DOMAIN-SUFFIX,music.126.net,DIRECT
+- DOMAIN-SUFFIX,music.163.com,DIRECT
+
+# > Tencent NorthGate
+- DOMAIN-SUFFIX,NorthGate.qq.com,DIRECT
+
+#Tech
+- DOMAIN-SUFFIX,code.visualstudio.com,DIRECT
+- DOMAIN-SUFFIX,v2ex.com,NorthGate
+- DOMAIN-KEYWORD,gitlab,NorthGate
+- DOMAIN-KEYWORD,github,NorthGate
+- DOMAIN-KEYWORD,stackoverflow.com,NorthGate
+- DOMAIN-SUFFIX,pinboard.in,NorthGate
+- DOMAIN-SUFFIX,techcrunch.com,NorthGate
+- DOMAIN-SUFFIX,trello.com,NorthGate
+- DOMAIN-SUFFIX,techsmith.com,NorthGate
+- DOMAIN-SUFFIX,thepiratebay.org,NorthGate
+- DOMAIN-SUFFIX,pinterest.com,NorthGate
+- DOMAIN-SUFFIX,yacd.haishan.me,NorthGate
+
+# DIRECT
+- DOMAIN-SUFFIX,digicert.com,DIRECT
+
+# > Google
+- DOMAIN,pagead2.googlesyndication.com,DIRECT
+- DOMAIN-SUFFIX,abc.xyz,NorthGate
+- DOMAIN-SUFFIX,android.com,NorthGate
+- DOMAIN-SUFFIX,androidify.com,NorthGate
+- DOMAIN-SUFFIX,dialogflow.com,NorthGate
+- DOMAIN-SUFFIX,autodraw.com,NorthGate
+- DOMAIN-SUFFIX,capitalg.com,NorthGate
+- DOMAIN-SUFFIX,certificate-transparency.org,NorthGate
+- DOMAIN-SUFFIX,chrome.com,NorthGate
+- DOMAIN-SUFFIX,chromeexperiments.com,NorthGate
+- DOMAIN-SUFFIX,chromestatus.com,NorthGate
+- DOMAIN-SUFFIX,chromium.org,NorthGate
+- DOMAIN-SUFFIX,creativelab5.com,NorthGate
+- DOMAIN-SUFFIX,debug.com,NorthGate
+- DOMAIN-SUFFIX,deepmind.com,NorthGate
+- DOMAIN-SUFFIX,firebaseio.com,NorthGate
+- DOMAIN-SUFFIX,getmdl.io,NorthGate
+- DOMAIN-SUFFIX,ggpht.com,NorthGate
+- DOMAIN-SUFFIX,gmail.com,NorthGate
+- DOMAIN-SUFFIX,gmodules.com,NorthGate
+- DOMAIN-SUFFIX,godoc.org,NorthGate
+- DOMAIN-SUFFIX,golang.org,NorthGate
+- DOMAIN-SUFFIX,gstatic.com,NorthGate
+- DOMAIN-SUFFIX,gv.com,NorthGate
+- DOMAIN-SUFFIX,gwtproject.org,NorthGate
+- DOMAIN-SUFFIX,itasoftware.com,NorthGate
+- DOMAIN-SUFFIX,madewithcode.com,NorthGate
+- DOMAIN-SUFFIX,material.io,NorthGate
+- DOMAIN-SUFFIX,polymer-project.org,NorthGate
+- DOMAIN-SUFFIX,admin.recaptcha.net,NorthGate
+- DOMAIN-SUFFIX,recaptcha.net,NorthGate
+- DOMAIN-SUFFIX,shattered.io,NorthGate
+- DOMAIN-SUFFIX,synergyse.com,NorthGate
+- DOMAIN-SUFFIX,tensorflow.org,NorthGate
+- DOMAIN-SUFFIX,tiltbrush.com,NorthGate
+- DOMAIN-SUFFIX,waveprotocol.org,NorthGate
+- DOMAIN-SUFFIX,waymo.com,NorthGate
+- DOMAIN-SUFFIX,webmproject.org,NorthGate
+- DOMAIN-SUFFIX,webrtc.org,NorthGate
+- DOMAIN-SUFFIX,whatbrowser.org,NorthGate
+- DOMAIN-SUFFIX,widevine.com,NorthGate
+- DOMAIN-SUFFIX,x.company,NorthGate
+- DOMAIN-KEYWORD,google,NorthGate
+
+# apple
+- DOMAIN,hls.itunes.apple.com,DIRECT
+- DOMAIN,itunes.apple.com,DIRECT
+- DOMAIN-SUFFIX,apple.com,DIRECT
+- DOMAIN-SUFFIX,icloud.com,DIRECT
+- DOMAIN-SUFFIX,icloud-content.com,DIRECT
+- DOMAIN-SUFFIX,mzstatic.com,DIRECT
+- DOMAIN-SUFFIX,akadns.net,DIRECT
+- DOMAIN-SUFFIX,aaplimg.com,DIRECT
+- DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+
+# 国内网站
+- DOMAIN-SUFFIX,126.com,DIRECT
+- DOMAIN-SUFFIX,126.net,DIRECT
+- DOMAIN-SUFFIX,127.net,DIRECT
+- DOMAIN-SUFFIX,163.com,DIRECT
+- DOMAIN-SUFFIX,360buyimg.com,DIRECT
+- DOMAIN-SUFFIX,36kr.com,DIRECT
+- DOMAIN-SUFFIX,acfun.tv,DIRECT
+- DOMAIN-SUFFIX,air-matters.com,DIRECT
+- DOMAIN-SUFFIX,aixifan.com,DIRECT
+- DOMAIN-SUFFIX,akamaized.net,DIRECT
+- DOMAIN-KEYWORD,alicdn,DIRECT
+- DOMAIN-KEYWORD,alipay,DIRECT
+- DOMAIN-KEYWORD,payssion,DIRECT
+- DOMAIN-KEYWORD,taobao,DIRECT
+- DOMAIN-SUFFIX,amap.com,DIRECT
+- DOMAIN-SUFFIX,autonavi.com,DIRECT
+- DOMAIN-KEYWORD,baidu,DIRECT
+- DOMAIN-SUFFIX,bdimg.com,DIRECT
+- DOMAIN-SUFFIX,bdstatic.com,DIRECT
+- DOMAIN-SUFFIX,bilibili.com,DIRECT
+- DOMAIN-SUFFIX,caiyunapp.com,DIRECT
+- DOMAIN-SUFFIX,clouddn.com,DIRECT
+- DOMAIN-SUFFIX,cnbeta.com,DIRECT
+- DOMAIN-SUFFIX,cnbetacdn.com,DIRECT
+- DOMAIN-SUFFIX,cootekservice.com,DIRECT
+- DOMAIN-SUFFIX,csdn.net,DIRECT
+- DOMAIN-SUFFIX,ctrip.com,DIRECT
+- DOMAIN-SUFFIX,dgtle.com,DIRECT
+- DOMAIN-SUFFIX,dianping.com,DIRECT
+- DOMAIN-SUFFIX,douban.com,DIRECT
+- DOMAIN-SUFFIX,doubanio.com,DIRECT
+- DOMAIN-SUFFIX,duokan.com,DIRECT
+- DOMAIN-SUFFIX,easou.com,DIRECT
+- DOMAIN-SUFFIX,ele.me,DIRECT
+- DOMAIN-SUFFIX,feng.com,DIRECT
+- DOMAIN-SUFFIX,fir.im,DIRECT
+- DOMAIN-SUFFIX,frdic.com,DIRECT
+- DOMAIN-SUFFIX,g-cores.com,DIRECT
+- DOMAIN-SUFFIX,godic.net,DIRECT
+- DOMAIN-SUFFIX,gtimg.com,DIRECT
+- DOMAIN,cdn.hockeyapp.net,DIRECT
+- DOMAIN-SUFFIX,hongxiu.com,DIRECT
+- DOMAIN-SUFFIX,hxcdn.net,DIRECT
+- DOMAIN-SUFFIX,iciba.com,DIRECT
+- DOMAIN-SUFFIX,ifeng.com,DIRECT
+- DOMAIN-SUFFIX,ifengimg.com,DIRECT
+- DOMAIN-SUFFIX,ipip.net,DIRECT
+- DOMAIN-SUFFIX,iqiyi.com,DIRECT
+- DOMAIN-SUFFIX,jd.com,DIRECT
+- DOMAIN-SUFFIX,jianshu.com,DIRECT
+- DOMAIN-SUFFIX,knewone.com,DIRECT
+- DOMAIN-SUFFIX,le.com,DIRECT
+- DOMAIN-SUFFIX,lecloud.com,DIRECT
+- DOMAIN-SUFFIX,lemicp.com,DIRECT
+- DOMAIN-SUFFIX,licdn.com,DIRECT
+- DOMAIN-SUFFIX,linkedin.com,DIRECT
+- DOMAIN-SUFFIX,luoo.net,DIRECT
+- DOMAIN-SUFFIX,meituan.com,DIRECT
+- DOMAIN-SUFFIX,meituan.net,DIRECT
+- DOMAIN-SUFFIX,mi.com,DIRECT
+- DOMAIN-SUFFIX,miaopai.com,DIRECT
+- DOMAIN-SUFFIX,microsoft.com,DIRECT
+- DOMAIN-SUFFIX,microsoftonline.com,DIRECT
+- DOMAIN-SUFFIX,miui.com,DIRECT
+- DOMAIN-SUFFIX,miwifi.com,DIRECT
+- DOMAIN-SUFFIX,mob.com,DIRECT
+- DOMAIN-SUFFIX,netease.com,DIRECT
+- DOMAIN-SUFFIX,office.com,DIRECT
+- DOMAIN-SUFFIX,office365.com,DIRECT
+- DOMAIN-KEYWORD,officecdn,DIRECT
+- DOMAIN-SUFFIX,oschina.net,DIRECT
+- DOMAIN-SUFFIX,ppsimg.com,DIRECT
+- DOMAIN-SUFFIX,pstatp.com,DIRECT
+- DOMAIN-SUFFIX,qcloud.com,DIRECT
+- DOMAIN-SUFFIX,qdaily.com,DIRECT
+- DOMAIN-SUFFIX,qdmm.com,DIRECT
+- DOMAIN-SUFFIX,qhimg.com,DIRECT
+- DOMAIN-SUFFIX,qhres.com,DIRECT
+- DOMAIN-SUFFIX,qidian.com,DIRECT
+- DOMAIN-SUFFIX,qihucdn.com,DIRECT
+- DOMAIN-SUFFIX,qiniu.com,DIRECT
+- DOMAIN-SUFFIX,qiniucdn.com,DIRECT
+- DOMAIN-SUFFIX,qiyipic.com,DIRECT
+- DOMAIN-SUFFIX,qq.com,DIRECT
+- DOMAIN-SUFFIX,qqurl.com,DIRECT
+- DOMAIN-SUFFIX,rarbg.to,DIRECT
+- DOMAIN-SUFFIX,ruguoapp.com,DIRECT
+- DOMAIN-SUFFIX,segmentfault.com,DIRECT
+- DOMAIN-SUFFIX,sinaapp.com,DIRECT
+- DOMAIN-SUFFIX,smzdm.com,DIRECT
+- DOMAIN-SUFFIX,sogou.com,DIRECT
+- DOMAIN-SUFFIX,sogoucdn.com,DIRECT
+- DOMAIN-SUFFIX,sohu.com,DIRECT
+- DOMAIN-SUFFIX,soku.com,DIRECT
+- DOMAIN-SUFFIX,speedtest.net,DIRECT
+- DOMAIN-SUFFIX,sspai.com,DIRECT
+- DOMAIN-SUFFIX,suning.com,DIRECT
+- DOMAIN-SUFFIX,taobao.com,DIRECT
+- DOMAIN-SUFFIX,tenpay.com,DIRECT
+- DOMAIN-SUFFIX,tmall.com,DIRECT
+- DOMAIN-SUFFIX,tudou.com,DIRECT
+- DOMAIN-SUFFIX,umetrip.com,DIRECT
+- DOMAIN-SUFFIX,upaiyun.com,DIRECT
+- DOMAIN-SUFFIX,upyun.com,DIRECT
+- DOMAIN-SUFFIX,v2ex.com,DIRECT
+- DOMAIN-SUFFIX,veryzhun.com,DIRECT
+- DOMAIN-SUFFIX,weather.com,DIRECT
+- DOMAIN-SUFFIX,weibo.com,DIRECT
+- DOMAIN-SUFFIX,xiami.com,DIRECT
+- DOMAIN-SUFFIX,xiami.net,DIRECT
+- DOMAIN-SUFFIX,xiaomicp.com,DIRECT
+- DOMAIN-SUFFIX,ximalaya.com,DIRECT
+- DOMAIN-SUFFIX,xmcdn.com,DIRECT
+- DOMAIN-SUFFIX,xunlei.com,DIRECT
+- DOMAIN-SUFFIX,xycdn.com,DIRECT
+- DOMAIN-SUFFIX,yhd.com,DIRECT
+- DOMAIN-SUFFIX,yihaodianimg.com,DIRECT
+- DOMAIN-SUFFIX,yinxiang.com,DIRECT
+- DOMAIN-SUFFIX,ykimg.com,DIRECT
+- DOMAIN-SUFFIX,youdao.com,DIRECT
+- DOMAIN-SUFFIX,youku.com,DIRECT
+- DOMAIN-SUFFIX,zealer.com,DIRECT
+- DOMAIN-SUFFIX,zhihu.com,DIRECT
+- DOMAIN-SUFFIX,zhimg.com,DIRECT
+- DOMAIN-SUFFIX,zimuzu.tv,DIRECT
+
+
+# 加速网站
+- DOMAIN-SUFFIX,9to5mac.com,NorthGate
+- DOMAIN-SUFFIX,abpchina.org,NorthGate
+- DOMAIN-SUFFIX,adblockplus.org,NorthGate
+- DOMAIN-SUFFIX,adobe.com,NorthGate
+- DOMAIN-SUFFIX,alfredapp.com,NorthGate
+- DOMAIN-SUFFIX,amplitude.com,NorthGate
+- DOMAIN-SUFFIX,ampproject.org,NorthGate
+- DOMAIN-SUFFIX,android.com,NorthGate
+- DOMAIN-SUFFIX,angularjs.org,NorthGate
+- DOMAIN-SUFFIX,aolcdn.com,NorthGate
+- DOMAIN-SUFFIX,apkpure.com,NorthGate
+- DOMAIN-SUFFIX,appledaily.com,NorthGate
+- DOMAIN-SUFFIX,appshopper.com,NorthGate
+- DOMAIN-SUFFIX,appspot.com,NorthGate
+- DOMAIN-SUFFIX,arcgis.com,NorthGate
+- DOMAIN-SUFFIX,archive.org,NorthGate
+- DOMAIN-SUFFIX,armorgames.com,NorthGate
+- DOMAIN-SUFFIX,aspnetcdn.com,NorthGate
+- DOMAIN-SUFFIX,att.com,NorthGate
+- DOMAIN-SUFFIX,awsstatic.com,NorthGate
+- DOMAIN-SUFFIX,azureedge.net,NorthGate
+- DOMAIN-SUFFIX,azurewebsites.net,NorthGate
+- DOMAIN-SUFFIX,bing.com,NorthGate
+- DOMAIN-SUFFIX,bintray.com,NorthGate
+- DOMAIN-SUFFIX,bit.com,NorthGate
+- DOMAIN-SUFFIX,bit.ly,NorthGate
+- DOMAIN-SUFFIX,bitbucket.org,NorthGate
+- DOMAIN-SUFFIX,bjango.com,NorthGate
+- DOMAIN-SUFFIX,bkrtx.com,NorthGate
+- DOMAIN-SUFFIX,blog.com,NorthGate
+- DOMAIN-SUFFIX,blogcdn.com,NorthGate
+- DOMAIN-SUFFIX,blogger.com,NorthGate
+- DOMAIN-SUFFIX,blogsmithmedia.com,NorthGate
+- DOMAIN-SUFFIX,blogspot.com,NorthGate
+- DOMAIN-SUFFIX,blogspot.hk,NorthGate
+- DOMAIN-SUFFIX,bloomberg.com,NorthGate
+- DOMAIN-SUFFIX,box.com,NorthGate
+- DOMAIN-SUFFIX,box.net,NorthGate
+- DOMAIN-SUFFIX,cachefly.net,NorthGate
+- DOMAIN-SUFFIX,chromium.org,NorthGate
+- DOMAIN-SUFFIX,cl.ly,NorthGate
+- DOMAIN-SUFFIX,cloudflare.com,NorthGate
+- DOMAIN-SUFFIX,cloudfront.net,NorthGate
+- DOMAIN-SUFFIX,cloudmagic.com,NorthGate
+- DOMAIN-SUFFIX,cmail19.com,NorthGate
+- DOMAIN-SUFFIX,cnet.com,NorthGate
+- DOMAIN-SUFFIX,cocoapods.org,NorthGate
+- DOMAIN-SUFFIX,comodoca.com,NorthGate
+- DOMAIN-SUFFIX,crashlytics.com,NorthGate
+- DOMAIN-SUFFIX,culturedcode.com,NorthGate
+- DOMAIN-SUFFIX,d.pr,NorthGate
+- DOMAIN-SUFFIX,danilo.to,NorthGate
+- DOMAIN-SUFFIX,dayone.me,NorthGate
+- DOMAIN-SUFFIX,db.tt,NorthGate
+- DOMAIN-SUFFIX,deskconnect.com,NorthGate
+- DOMAIN-SUFFIX,disq.us,NorthGate
+- DOMAIN-SUFFIX,disqus.com,NorthGate
+- DOMAIN-SUFFIX,disquscdn.com,NorthGate
+- DOMAIN-SUFFIX,dnsimple.com,NorthGate
+- DOMAIN-SUFFIX,docker.com,NorthGate
+- DOMAIN-SUFFIX,dribbble.com,NorthGate
+- DOMAIN-SUFFIX,droplr.com,NorthGate
+- DOMAIN-SUFFIX,duckduckgo.com,NorthGate
+- DOMAIN-SUFFIX,dueapp.com,NorthGate
+- DOMAIN-SUFFIX,dytt8.net,NorthGate
+- DOMAIN-SUFFIX,edgecastcdn.net,NorthGate
+- DOMAIN-SUFFIX,edgekey.net,NorthGate
+- DOMAIN-SUFFIX,edgesuite.net,NorthGate
+- DOMAIN-SUFFIX,engadget.com,NorthGate
+- DOMAIN-SUFFIX,entrust.net,NorthGate
+- DOMAIN-SUFFIX,eurekavpt.com,NorthGate
+- DOMAIN-SUFFIX,evernote.com,NorthGate
+- DOMAIN-SUFFIX,fabric.io,NorthGate
+- DOMAIN-SUFFIX,fast.com,NorthGate
+- DOMAIN-SUFFIX,fastly.net,NorthGate
+- DOMAIN-SUFFIX,fc2.com,NorthGate
+- DOMAIN-SUFFIX,feedburner.com,NorthGate
+- DOMAIN-SUFFIX,feedly.com,NorthGate
+- DOMAIN-SUFFIX,feedsportal.com,NorthGate
+- DOMAIN-SUFFIX,fiftythree.com,NorthGate
+- DOMAIN-SUFFIX,firebaseio.com,NorthGate
+- DOMAIN-SUFFIX,flexibits.com,NorthGate
+- DOMAIN-SUFFIX,flickr.com,NorthGate
+- DOMAIN-SUFFIX,flipboard.com,NorthGate
+- DOMAIN-SUFFIX,g.co,NorthGate
+- DOMAIN-SUFFIX,gabia.net,NorthGate
+- DOMAIN-SUFFIX,geni.us,NorthGate
+- DOMAIN-SUFFIX,gfx.ms,NorthGate
+- DOMAIN-SUFFIX,ggpht.com,NorthGate
+- DOMAIN-SUFFIX,ghostnoteapp.com,NorthGate
+- DOMAIN-SUFFIX,git.io,NorthGate
+- DOMAIN-KEYWORD,github,NorthGate
+- DOMAIN-SUFFIX,globalsign.com,NorthGate
+- DOMAIN-SUFFIX,gmodules.com,NorthGate
+- DOMAIN-SUFFIX,godaddy.com,NorthGate
+- DOMAIN-SUFFIX,golang.org,NorthGate
+- DOMAIN-SUFFIX,gongm.in,NorthGate
+- DOMAIN-SUFFIX,goo.gl,NorthGate
+- DOMAIN-SUFFIX,goodreaders.com,NorthGate
+- DOMAIN-SUFFIX,goodreads.com,NorthGate
+- DOMAIN-SUFFIX,gravatar.com,NorthGate
+- DOMAIN-SUFFIX,gvt0.com,NorthGate
+- DOMAIN-SUFFIX,hockeyapp.net,NorthGate
+- DOMAIN-SUFFIX,hotmail.com,NorthGate
+- DOMAIN-SUFFIX,icons8.com,NorthGate
+- DOMAIN-SUFFIX,ift.tt,NorthGate
+- DOMAIN-SUFFIX,ifttt.com,NorthGate
+- DOMAIN-SUFFIX,iherb.com,NorthGate
+- DOMAIN-SUFFIX,imageshack.us,NorthGate
+- DOMAIN-SUFFIX,img.ly,NorthGate
+- DOMAIN-SUFFIX,imgur.com,NorthGate
+- DOMAIN-SUFFIX,imore.com,NorthGate
+- DOMAIN-SUFFIX,instapaper.com,NorthGate
+- DOMAIN-SUFFIX,ipn.li,NorthGate
+- DOMAIN-SUFFIX,is.gd,NorthGate
+- DOMAIN-SUFFIX,issuu.com,NorthGate
+- DOMAIN-SUFFIX,itgonglun.com,NorthGate
+- DOMAIN-SUFFIX,itun.es,NorthGate
+- DOMAIN-SUFFIX,ixquick.com,NorthGate
+- DOMAIN-SUFFIX,j.mp,NorthGate
+- DOMAIN-SUFFIX,js.revsci.net,NorthGate
+- DOMAIN-SUFFIX,jshint.com,NorthGate
+- DOMAIN-SUFFIX,jtvnw.net,NorthGate
+- DOMAIN-SUFFIX,justgetflux.com,NorthGate
+- DOMAIN-SUFFIX,kat.cr,NorthGate
+- DOMAIN-SUFFIX,klip.me,NorthGate
+- DOMAIN-SUFFIX,libsyn.com,NorthGate
+- DOMAIN-SUFFIX,linode.com,NorthGate
+- DOMAIN-SUFFIX,lithium.com,NorthGate
+- DOMAIN-SUFFIX,littlehj.com,NorthGate
+- DOMAIN-SUFFIX,live.com,NorthGate
+- DOMAIN-SUFFIX,live.net,NorthGate
+- DOMAIN-SUFFIX,livefilestore.com,NorthGate
+- DOMAIN-SUFFIX,llnwd.net,NorthGate
+- DOMAIN-SUFFIX,macid.co,NorthGate
+- DOMAIN-SUFFIX,macromedia.com,NorthGate
+- DOMAIN-SUFFIX,macrumors.com,NorthGate
+- DOMAIN-SUFFIX,mashable.com,NorthGate
+- DOMAIN-SUFFIX,mathjax.org,NorthGate
+- DOMAIN-SUFFIX,medium.com,NorthGate
+- DOMAIN-SUFFIX,mega.co.nz,NorthGate
+- DOMAIN-SUFFIX,mega.nz,NorthGate
+- DOMAIN-SUFFIX,megaupload.com,NorthGate
+- DOMAIN-SUFFIX,microsofttranslator.com,NorthGate
+- DOMAIN-SUFFIX,mindnode.com,NorthGate
+- DOMAIN-SUFFIX,mobile01.com,NorthGate
+- DOMAIN-SUFFIX,modmyi.com,NorthGate
+- DOMAIN-SUFFIX,msedge.net,NorthGate
+- DOMAIN-SUFFIX,myfontastic.com,NorthGate
+- DOMAIN-SUFFIX,name.com,NorthGate
+- DOMAIN-SUFFIX,nextmedia.com,NorthGate
+- DOMAIN-SUFFIX,nsstatic.net,NorthGate
+- DOMAIN-SUFFIX,nssurge.com,NorthGate
+- DOMAIN-SUFFIX,nyt.com,NorthGate
+- DOMAIN-SUFFIX,nytimes.com,NorthGate
+- DOMAIN-SUFFIX,omnigroup.com,NorthGate
+- DOMAIN-SUFFIX,onedrive.com,NorthGate
+- DOMAIN-SUFFIX,onenote.com,NorthGate
+- DOMAIN-SUFFIX,ooyala.com,NorthGate
+- DOMAIN-SUFFIX,openvpn.net,NorthGate
+- DOMAIN-SUFFIX,openwrt.org,NorthGate
+- DOMAIN-SUFFIX,orkut.com,NorthGate
+- DOMAIN-SUFFIX,osxdaily.com,NorthGate
+- DOMAIN-SUFFIX,outlook.com,NorthGate
+- DOMAIN-SUFFIX,ow.ly,NorthGate
+- DOMAIN-SUFFIX,paddleapi.com,NorthGate
+- DOMAIN-SUFFIX,parallels.com,NorthGate
+- DOMAIN-SUFFIX,parse.com,NorthGate
+- DOMAIN-SUFFIX,pdfexpert.com,NorthGate
+- DOMAIN-SUFFIX,periscope.tv,NorthGate
+- DOMAIN-SUFFIX,pixelmator.com,NorthGate
+- DOMAIN-SUFFIX,pixiv.net,NorthGate
+- DOMAIN-SUFFIX,playpcesor.com,NorthGate
+- DOMAIN-SUFFIX,playstation.com,NorthGate
+- DOMAIN-SUFFIX,playstation.com.hk,NorthGate
+- DOMAIN-SUFFIX,playstation.net,NorthGate
+- DOMAIN-SUFFIX,playstationnetwork.com,NorthGate
+- DOMAIN-SUFFIX,pushwoosh.com,NorthGate
+- DOMAIN-SUFFIX,rime.im,NorthGate
+- DOMAIN-SUFFIX,servebom.com,NorthGate
+- DOMAIN-SUFFIX,sfx.ms,NorthGate
+- DOMAIN-SUFFIX,shadowsocks.org,NorthGate
+- DOMAIN-SUFFIX,sharethis.com,NorthGate
+- DOMAIN-SUFFIX,shazam.com,NorthGate
+- DOMAIN-SUFFIX,skype.com,NorthGate
+- DOMAIN-SUFFIX,smartdnsNorthGate.com,NorthGate
+- DOMAIN-SUFFIX,smartmailcloud.com,NorthGate
+- DOMAIN-SUFFIX,sndcdn.com,NorthGate
+- DOMAIN-SUFFIX,sony.com,NorthGate
+- DOMAIN-SUFFIX,soundcloud.com,NorthGate
+- DOMAIN-SUFFIX,sourceforge.net,NorthGate
+- DOMAIN-SUFFIX,spotify.com,NorthGate
+- DOMAIN-SUFFIX,squarespace.com,NorthGate
+- DOMAIN-SUFFIX,sstatic.net,NorthGate
+- DOMAIN-SUFFIX,st.luluku.pw,NorthGate
+- DOMAIN-SUFFIX,stackoverflow.com,NorthGate
+- DOMAIN-SUFFIX,startpage.com,NorthGate
+- DOMAIN-SUFFIX,staticflickr.com,NorthGate
+- DOMAIN-SUFFIX,steamcommunity.com,NorthGate
+- DOMAIN-SUFFIX,symauth.com,NorthGate
+- DOMAIN-SUFFIX,symcb.com,NorthGate
+- DOMAIN-SUFFIX,symcd.com,NorthGate
+- DOMAIN-SUFFIX,tapbots.com,NorthGate
+- DOMAIN-SUFFIX,tapbots.net,NorthGate
+- DOMAIN-SUFFIX,tdesktop.com,NorthGate
+- DOMAIN-SUFFIX,theverge.com,NorthGate
+- DOMAIN-SUFFIX,time.com,NorthGate
+- DOMAIN-SUFFIX,timeinc.net,NorthGate
+- DOMAIN-SUFFIX,tiny.cc,NorthGate
+- DOMAIN-SUFFIX,tinypic.com,NorthGate
+- DOMAIN-SUFFIX,tmblr.co,NorthGate
+- DOMAIN-SUFFIX,todoist.com,NorthGate
+- DOMAIN-SUFFIX,trustasiassl.com,NorthGate
+- DOMAIN-SUFFIX,tumblr.co,NorthGate
+- DOMAIN-SUFFIX,tumblr.com,NorthGate
+- DOMAIN-SUFFIX,tweetdeck.com,NorthGate
+- DOMAIN-SUFFIX,tweetmarker.net,NorthGate
+- DOMAIN-SUFFIX,twitch.tv,NorthGate
+- DOMAIN-SUFFIX,txmblr.com,NorthGate
+- DOMAIN-SUFFIX,typekit.net,NorthGate
+- DOMAIN-SUFFIX,ubertags.com,NorthGate
+- DOMAIN-SUFFIX,ublock.org,NorthGate
+- DOMAIN-SUFFIX,ubnt.com,NorthGate
+- DOMAIN-SUFFIX,ulyssesapp.com,NorthGate
+- DOMAIN-SUFFIX,urchin.com,NorthGate
+- DOMAIN-SUFFIX,usertrust.com,NorthGate
+- DOMAIN-SUFFIX,v.gd,NorthGate
+- DOMAIN-SUFFIX,vivaldi.com,NorthGate
+- DOMAIN-SUFFIX,vox-cdn.com,NorthGate
+- DOMAIN-SUFFIX,vsco.co,NorthGate
+- DOMAIN-SUFFIX,w.org,NorthGate
+- DOMAIN-SUFFIX,w3schools.com,NorthGate
+- DOMAIN-SUFFIX,webtype.com,NorthGate
+- DOMAIN-SUFFIX,wikiwand.com,NorthGate
+- DOMAIN-SUFFIX,wikileaks.org,NorthGate
+- DOMAIN-SUFFIX,wikimedia.org,NorthGate
+- DOMAIN-SUFFIX,wikipedia.com,NorthGate
+- DOMAIN-SUFFIX,wikipedia.org,NorthGate
+- DOMAIN-SUFFIX,windows.com,NorthGate
+- DOMAIN-SUFFIX,windows.net,NorthGate
+- DOMAIN-SUFFIX,wire.com,NorthGate
+- DOMAIN-SUFFIX,wordpress.com,NorthGate
+- DOMAIN-SUFFIX,workflowy.com,NorthGate
+- DOMAIN-SUFFIX,wp.com,NorthGate
+- DOMAIN-SUFFIX,wsj.com,NorthGate
+- DOMAIN-SUFFIX,wsj.net,NorthGate
+- DOMAIN-SUFFIX,xda-developers.com,NorthGate
+- DOMAIN-SUFFIX,xeeno.com,NorthGate
+- DOMAIN-SUFFIX,xiti.com,NorthGate
+- DOMAIN-SUFFIX,yahoo.com,NorthGate
+- DOMAIN-SUFFIX,yimg.com,NorthGate
+- DOMAIN-SUFFIX,ying.com,NorthGate
+- DOMAIN-SUFFIX,yoyo.org,NorthGate
+
+
+
+# 常见广告域名屏蔽
+- DOMAIN-KEYWORD,admarvel,REJECT
+- DOMAIN-KEYWORD,admaster,REJECT
+- DOMAIN-KEYWORD,adsage,REJECT
+- DOMAIN-KEYWORD,adsmogo,REJECT
+- DOMAIN-KEYWORD,adsrvmedia,REJECT
+- DOMAIN-KEYWORD,adwords,REJECT
+- DOMAIN-KEYWORD,adservice,REJECT
+- DOMAIN-KEYWORD,domob,REJECT
+- DOMAIN-KEYWORD,duomeng,REJECT
+- DOMAIN-KEYWORD,dwtrack,REJECT
+- DOMAIN-KEYWORD,guanggao,REJECT
+- DOMAIN-KEYWORD,lianmeng,REJECT
+- DOMAIN-KEYWORD,omgmta,REJECT
+- DOMAIN-KEYWORD,openx,REJECT
+- DOMAIN-KEYWORD,partnerad,REJECT
+- DOMAIN-KEYWORD,pingfore,REJECT
+- DOMAIN-KEYWORD,supersonicads,REJECT
+- DOMAIN-KEYWORD,tracking,REJECT
+- DOMAIN-KEYWORD,uedas,REJECT
+- DOMAIN-KEYWORD,umeng,REJECT
+- DOMAIN-KEYWORD,usage,REJECT
+- DOMAIN-KEYWORD,wlmonitor,REJECT
+- DOMAIN-KEYWORD,zjtoolbar,REJECT
+
+
+# Internet Service Provider AD Protection 运营商劫持保护
+- DOMAIN-SUFFIX,17gouwuba.com,REJECT
+- DOMAIN-SUFFIX,189zj.cn,REJECT
+- DOMAIN-SUFFIX,285680.com,REJECT
+- DOMAIN-SUFFIX,3721zh.com,REJECT
+- DOMAIN-SUFFIX,4336wang.cn,REJECT
+- DOMAIN-SUFFIX,51chumoping.com,REJECT
+- DOMAIN-SUFFIX,58mingri.cn,REJECT
+- DOMAIN-SUFFIX,58mingtian.cn,REJECT
+- DOMAIN-SUFFIX,6d63d3.com,REJECT
+- DOMAIN-SUFFIX,91veg.com,REJECT
+- DOMAIN-SUFFIX,9s6q.cn,REJECT
+- DOMAIN-SUFFIX,adsame.com,REJECT
+- DOMAIN-SUFFIX,aiclk.com,REJECT
+- DOMAIN-SUFFIX,akuai.top,REJECT
+- DOMAIN-SUFFIX,atplay.cn,REJECT
+- DOMAIN-SUFFIX,baiwanchuangyi.com,REJECT
+- DOMAIN-SUFFIX,bayimob.com,REJECT
+- DOMAIN-SUFFIX,beerto.cn,REJECT
+- DOMAIN-SUFFIX,beilamusi.com,REJECT
+- DOMAIN-SUFFIX,benshiw.net,REJECT
+- DOMAIN-SUFFIX,bianxianmao.com,REJECT
+- DOMAIN-SUFFIX,bryonypie.com,REJECT
+- DOMAIN-SUFFIX,cishantao.com,REJECT
+- DOMAIN-SUFFIX,cszlks.com,REJECT
+- DOMAIN-SUFFIX,cudaojia.com,REJECT
+- DOMAIN-SUFFIX,dafapromo.com,REJECT
+- DOMAIN-SUFFIX,daitdai.com,REJECT
+- DOMAIN-SUFFIX,dsaeerf.com,REJECT
+- DOMAIN-SUFFIX,dugesheying.com,REJECT
+- DOMAIN-SUFFIX,erdoscs.com,REJECT
+- DOMAIN-SUFFIX,fan-yong.com,REJECT
+- DOMAIN-SUFFIX,feih.com.cn,REJECT
+- DOMAIN-SUFFIX,fjlqqc.com,REJECT
+- DOMAIN-SUFFIX,fkku194.com,REJECT
+- DOMAIN-SUFFIX,freedrive.cn,REJECT
+- DOMAIN-SUFFIX,gclick.cn,REJECT
+- DOMAIN-SUFFIX,goufanli100.com,REJECT
+- DOMAIN-SUFFIX,gouwubang.com,REJECT
+- DOMAIN-SUFFIX,haoshengtoys.com,REJECT
+- DOMAIN-SUFFIX,ichaosheng.com,REJECT
+- DOMAIN-SUFFIX,ishop789.com,REJECT
+- DOMAIN-SUFFIX,jdkic.com,REJECT
+- DOMAIN-SUFFIX,jiubuhua.com,REJECT
+- DOMAIN-SUFFIX,kumihua.com,REJECT
+- DOMAIN-SUFFIX,linktech.cn,REJECT
+- DOMAIN-SUFFIX,ltheanine.cn,REJECT
+- DOMAIN-SUFFIX,maipinshangmao.com,REJECT
+- DOMAIN-SUFFIX,minisplat.cn,REJECT
+- DOMAIN-SUFFIX,mkitgfs.com,REJECT
+- DOMAIN-SUFFIX,mlnbike.com,REJECT
+- DOMAIN-SUFFIX,newapi.com,REJECT
+- DOMAIN-SUFFIX,pinzhitmall.com,REJECT
+- DOMAIN-SUFFIX,poppyta.com,REJECT
+- DOMAIN-SUFFIX,qichexin.com,REJECT
+- DOMAIN-SUFFIX,qinchugudao.com,REJECT
+- DOMAIN-SUFFIX,quanliyouxi.cn,REJECT
+- DOMAIN-SUFFIX,qutaobi.com,REJECT
+- DOMAIN-SUFFIX,ry51w.cn,REJECT
+- DOMAIN-SUFFIX,sg536.cn,REJECT
+- DOMAIN-SUFFIX,sifubo.cn,REJECT
+- DOMAIN-SUFFIX,sifuce.cn,REJECT
+- DOMAIN-SUFFIX,sifuda.cn,REJECT
+- DOMAIN-SUFFIX,sifufu.cn,REJECT
+- DOMAIN-SUFFIX,sifuge.cn,REJECT
+- DOMAIN-SUFFIX,sifugu.cn,REJECT
+- DOMAIN-SUFFIX,sifuhe.cn,REJECT
+- DOMAIN-SUFFIX,sifuhu.cn,REJECT
+- DOMAIN-SUFFIX,sifuji.cn,REJECT
+- DOMAIN-SUFFIX,sifuka.cn,REJECT
+- DOMAIN-SUFFIX,smgru.net,REJECT
+- DOMAIN-SUFFIX,taoggou.com,REJECT
+- DOMAIN-SUFFIX,tcxshop.com,REJECT
+- DOMAIN-SUFFIX,tjqonline.cn,REJECT
+- DOMAIN-SUFFIX,topitme.com,REJECT
+- DOMAIN-SUFFIX,tuia.cn,REJECT
+- DOMAIN-SUFFIX,tuipenguin.com,REJECT
+- DOMAIN-SUFFIX,tuitiger.com,REJECT
+- DOMAIN-SUFFIX,wx16999.com,REJECT
+- DOMAIN-SUFFIX,xiaohuau.xyz,REJECT
+- DOMAIN-SUFFIX,yinmong.com,REJECT
+- DOMAIN-SUFFIX,yiqifa.com,REJECT
+- DOMAIN-SUFFIX,yitaopt.com,REJECT
+- DOMAIN-SUFFIX,zhaozecheng.cn,REJECT
+- DOMAIN-SUFFIX,zhenxinet.com,REJECT
+- DOMAIN-SUFFIX,zzd6.com,REJECT
+
+# Blocklist 黑名单
+- DOMAIN-SUFFIX,kuaizip.com,REJECT
+- DOMAIN-SUFFIX,mackeeper.com,REJECT
+# > CJ Marketing
+- DOMAIN-SUFFIX,4009997658.com,REJECT
+- DOMAIN-SUFFIX,abbyychina.com,REJECT
+- DOMAIN-SUFFIX,bartender.cc,REJECT
+- DOMAIN-SUFFIX,betterzip.net,REJECT
+- DOMAIN-SUFFIX,beyondcompare.cc,REJECT
+- DOMAIN-SUFFIX,bingdianhuanyuan.cn,REJECT
+- DOMAIN-SUFFIX,chemdraw.com.cn,REJECT
+- DOMAIN-SUFFIX,cjmakeding.com,REJECT
+- DOMAIN-SUFFIX,cjmkt.com,REJECT
+- DOMAIN-SUFFIX,codesoftchina.com,REJECT
+- DOMAIN-SUFFIX,coreldrawchina.com,REJECT
+- DOMAIN-SUFFIX,crossoverchina.com,REJECT
+- DOMAIN-SUFFIX,easyrecoverychina.com,REJECT
+- DOMAIN-SUFFIX,ediuschina.com,REJECT
+- DOMAIN-SUFFIX,flstudiochina.com,REJECT
+- DOMAIN-SUFFIX,formysql.com,REJECT
+- DOMAIN-SUFFIX,guitarpro.cc,REJECT
+- DOMAIN-SUFFIX,huishenghuiying.com.cn,REJECT
+- DOMAIN-SUFFIX,hypersnap.net,REJECT
+- DOMAIN-SUFFIX,iconworkshop.cn,REJECT
+- DOMAIN-SUFFIX,imindmap.cc,REJECT
+- DOMAIN-SUFFIX,jihehuaban.com.cn,REJECT
+- DOMAIN-SUFFIX,keyshot.cc,REJECT
+- DOMAIN-SUFFIX,kingdeecn.cn,REJECT
+- DOMAIN-SUFFIX,logoshejishi.com,REJECT
+- DOMAIN-SUFFIX,mairuan.cn,REJECT
+- DOMAIN-SUFFIX,mairuan.com,REJECT
+- DOMAIN-SUFFIX,mairuan.com.cn,REJECT
+- DOMAIN-SUFFIX,mairuan.net,REJECT
+- DOMAIN-SUFFIX,mairuanwang.com,REJECT
+- DOMAIN-SUFFIX,makeding.com,REJECT
+- DOMAIN-SUFFIX,mathtype.cn,REJECT
+- DOMAIN-SUFFIX,mindmanager.cc,REJECT
+- DOMAIN-SUFFIX,mindmapper.cc,REJECT
+- DOMAIN-SUFFIX,mycleanmymac.com,REJECT
+- DOMAIN-SUFFIX,nicelabel.cc,REJECT
+- DOMAIN-SUFFIX,ntfsformac.cc,REJECT
+- DOMAIN-SUFFIX,ntfsformac.cn,REJECT
+- DOMAIN-SUFFIX,overturechina.com,REJECT
+- DOMAIN-SUFFIX,passwordrecovery.cn,REJECT
+- DOMAIN-SUFFIX,pdfexpert.cc,REJECT
+- DOMAIN-SUFFIX,shankejingling.com,REJECT
+- DOMAIN-SUFFIX,ultraiso.net,REJECT
+- DOMAIN-SUFFIX,vegaschina.cn,REJECT
+- DOMAIN-SUFFIX,xmindchina.net,REJECT
+- DOMAIN-SUFFIX,xshellcn.com,REJECT
+- DOMAIN-SUFFIX,yihuifu.cn,REJECT
+- DOMAIN-SUFFIX,yuanchengxiezuo.com,REJECT
+- DOMAIN-SUFFIX,zbrushcn.com,REJECT
+- DOMAIN-SUFFIX,zhzzx.com,REJECT
+- DOMAIN-SUFFIX,zunmi.cn,REJECT
+
+- DOMAIN-SUFFIX,awesome-hd.me,DIRECT
+- DOMAIN-SUFFIX,broadcasthe.net,DIRECT
+- DOMAIN-SUFFIX,chdbits.co,DIRECT
+- DOMAIN-SUFFIX,classix-unlimited.co.uk,DIRECT
+- DOMAIN-SUFFIX,empornium.me,DIRECT
+- DOMAIN-SUFFIX,gazellegames.net,DIRECT
+- DOMAIN-SUFFIX,hdchina.org,DIRECT
+- DOMAIN-SUFFIX,hdsky.me,DIRECT
+- DOMAIN-SUFFIX,icetorrent.org,DIRECT
+- DOMAIN-SUFFIX,jpopsuki.eu,DIRECT
+- DOMAIN-SUFFIX,keepfrds.com,DIRECT
+- DOMAIN-SUFFIX,madsrevolution.net,DIRECT
+- DOMAIN-SUFFIX,m-team.cc,DIRECT
+- DOMAIN-SUFFIX,nanyangpt.com,DIRECT
+- DOMAIN-SUFFIX,ncore.cc,DIRECT
+- DOMAIN-SUFFIX,open.cd,DIRECT
+- DOMAIN-SUFFIX,ourbits.club,DIRECT
+- DOMAIN-SUFFIX,passthepopcorn.me,DIRECT
+- DOMAIN-SUFFIX,privatehd.to,DIRECT
+- DOMAIN-SUFFIX,redacted.ch,DIRECT
+- DOMAIN-SUFFIX,springsunday.net,DIRECT
+- DOMAIN-SUFFIX,tjupt.org,DIRECT
+- DOMAIN-SUFFIX,totheglory.im,DIRECT
+- DOMAIN-KEYWORD,announce,DIRECT
+- DOMAIN-KEYWORD,torrent,DIRECT
+- DOMAIN-KEYWORD,tracker,DIRECT
+
+- IP-CIDR,39.107.15.115/32,REJECT
+- IP-CIDR,47.89.59.182/32,REJECT
+- IP-CIDR,103.49.209.27/32,REJECT
+- IP-CIDR,123.56.152.96/32,REJECT
+# > ChinaNet
+- IP-CIDR,61.160.200.223/32,REJECT
+- IP-CIDR,61.160.200.242/32,REJECT
+- IP-CIDR,61.160.200.252/32,REJECT
+- IP-CIDR,61.174.50.214/32,REJECT
+- IP-CIDR,111.175.220.163/32,REJECT
+- IP-CIDR,111.175.220.164/32,REJECT
+- IP-CIDR,124.232.160.178/32,REJECT
+- IP-CIDR,175.6.223.15/32,REJECT
+- IP-CIDR,183.59.53.237/32,REJECT
+- IP-CIDR,218.93.127.37/32,REJECT
+- IP-CIDR,221.228.17.152/32,REJECT
+- IP-CIDR,221.231.6.79/32,REJECT
+- IP-CIDR,222.186.61.91/32,REJECT
+- IP-CIDR,222.186.61.95/32,REJECT
+- IP-CIDR,222.186.61.96/32,REJECT
+- IP-CIDR,222.186.61.97/32,REJECT
+# > ChinaUnicom
+- IP-CIDR,106.75.231.48/32,REJECT
+- IP-CIDR,119.4.249.166/32,REJECT
+- IP-CIDR,220.196.52.141/32,REJECT
+- IP-CIDR,221.6.4.148/32,REJECT
+# > ChinaMobile
+- IP-CIDR,114.247.28.96/32,REJECT
+- IP-CIDR,221.179.131.72/32,REJECT
+- IP-CIDR,221.179.140.145/32,REJECT
+# > Dr.Peng
+- IP-CIDR,10.72.25.0/24,REJECT
+- IP-CIDR,115.182.16.79/32,REJECT
+- IP-CIDR,118.144.88.126/32,REJECT
+- IP-CIDR,118.144.88.215/32,REJECT
+- IP-CIDR,120.76.189.132/32,REJECT
+- IP-CIDR,124.14.21.147/32,REJECT
+- IP-CIDR,124.14.21.151/32,REJECT
+- IP-CIDR,180.166.52.24/32,REJECT
+- IP-CIDR,220.115.251.25/32,REJECT
+- IP-CIDR,222.73.156.235/32,REJECT
+
+# (Extra IP-CIRD)
+# > Google
+- IP-CIDR,35.190.247.0/24,NorthGate
+- IP-CIDR,64.233.160.0/19,NorthGate
+- IP-CIDR,66.102.0.0/20,NorthGate
+- IP-CIDR,66.249.80.0/20,NorthGate
+- IP-CIDR,72.14.192.0/18,NorthGate
+- IP-CIDR,74.125.0.0/16,NorthGate
+- IP-CIDR,108.177.8.0/21,NorthGate
+- IP-CIDR,172.217.0.0/16,NorthGate
+- IP-CIDR,173.194.0.0/16,NorthGate
+- IP-CIDR,209.85.128.0/17,NorthGate
+- IP-CIDR,216.58.192.0/19,NorthGate
+- IP-CIDR,216.239.32.0/19,NorthGate
+# > Facebook
+- IP-CIDR,31.13.24.0/21,NorthGate
+- IP-CIDR,31.13.64.0/18,NorthGate
+- IP-CIDR,45.64.40.0/22,NorthGate
+- IP-CIDR,66.220.144.0/20,NorthGate
+- IP-CIDR,69.63.176.0/20,NorthGate
+- IP-CIDR,69.171.224.0/19,NorthGate
+- IP-CIDR,74.119.76.0/22,NorthGate
+- IP-CIDR,103.4.96.0/22,NorthGate
+- IP-CIDR,129.134.0.0/17,NorthGate
+- IP-CIDR,157.240.0.0/17,NorthGate
+- IP-CIDR,173.252.64.0/19,NorthGate
+- IP-CIDR,173.252.96.0/19,NorthGate
+- IP-CIDR,179.60.192.0/22,NorthGate
+- IP-CIDR,185.60.216.0/22,NorthGate
+- IP-CIDR,204.15.20.0/22,NorthGate
+# > Twitter
+- IP-CIDR,69.195.160.0/19,NorthGate
+- IP-CIDR,104.244.42.0/21,NorthGate
+- IP-CIDR,192.133.76.0/22,NorthGate
+- IP-CIDR,199.16.156.0/22,NorthGate
+- IP-CIDR,199.59.148.0/22,NorthGate
+- IP-CIDR,199.96.56.0/21,NorthGate
+- IP-CIDR,202.160.128.0/22,NorthGate
+- IP-CIDR,209.237.192.0/19,NorthGate
+
+# Cloudflare
+- IP-CIDR,173.245.48.0/20,NorthGate
+- IP-CIDR,103.21.244.0/22,NorthGate
+- IP-CIDR,103.22.200.0/22,NorthGate
+- IP-CIDR,103.31.4.0/22,NorthGate
+- IP-CIDR,141.101.64.0/18,NorthGate
+- IP-CIDR,108.162.192.0/18,NorthGate
+- IP-CIDR,190.93.240.0/20,NorthGate
+- IP-CIDR,188.114.96.0/20,NorthGate
+- IP-CIDR,197.234.240.0/22,NorthGate
+- IP-CIDR,198.41.128.0/17,NorthGate
+- IP-CIDR,162.158.0.0/15,NorthGate
+- IP-CIDR,104.16.0.0/12,NorthGate
+- IP-CIDR,172.64.0.0/13,NorthGate
+- IP-CIDR,131.0.72.0/22,NorthGate
+
+# Telegram
+- DOMAIN-SUFFIX,telegra.ph,NorthGate
+- DOMAIN-SUFFIX,telegram.org,NorthGate
+- IP-CIDR,91.108.56.0/22,NorthGate
+- IP-CIDR,91.108.4.0/22,NorthGate
+- IP-CIDR,91.108.8.0/22,NorthGate
+- IP-CIDR,91.108.12.0/22,NorthGate
+- IP-CIDR,91.108.16.0/22,NorthGate
+- IP-CIDR,91.108.56.0/22,NorthGate
+- IP-CIDR,109.239.140.0/24,NorthGate
+- IP-CIDR,149.154.160.0/20,NorthGate
+- IP-CIDR,149.154.164.0/22,NorthGate
+- IP-CIDR,67.198.55.0/24,NorthGate
+- IP-CIDR,205.172.60.0/22,NorthGate
+
+# LAN
+- DOMAIN-SUFFIX,local,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,17.0.0.0/8,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- DST-PORT,6881,DIRECT
+- DST-PORT,6882,DIRECT
+- DST-PORT,6883,DIRECT
+- DST-PORT,6884,DIRECT
+- DST-PORT,6885,DIRECT
+- DST-PORT,6886,DIRECT
+- DST-PORT,6887,DIRECT
+- DST-PORT,6888,DIRECT
+- DST-PORT,6889,DIRECT
+
+
+# RULE VERSION
+- DOMAIN,2020020202.version.clash.im,REJECT
+
+# 最终规则
+- GEOIP,CN,DIRECT
+- MATCH,NorthGate
