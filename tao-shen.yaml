@@ -70,6 +70,13 @@ proxies:
     alterId: 233
     cipher: "aes-128-gcm"
 
+  - name: 139.180.186.194
+    type: vmess
+    server: 139.180.186.194
+    port: 666
+    uuid: "24813255-228d-b0e0-c3fa-e5d4c9defda1"
+    alterId: 233
+    cipher: "aes-128-gcm"
  
 
 proxy-groups:
@@ -77,9 +84,8 @@ proxy-groups:
     type: "select"
     proxies:
         - "northgate"
-        # - "transfer"
+        - "139.180.186.194"
         - "ipssh"
-        # - "trojan"
         - "trojan"
         
 
