@@ -94,7 +94,8 @@ rules:
 # Tao's config
 - DOMAIN,vultr.com,DIRECT
 - DOMAIN,translate.google.com,DIRECT
-# - DOMAIN,acm.org,DIRECT
+- DOMAIN,translate.google.cn,DIRECT
+- DOMAIN,acm.org,DIRECT
 - DOMAIN-SUFFIX,acm.org,DIRECT
 - DOMAIN-SUFFIX,springer.com,DIRECT
 # hot fix
