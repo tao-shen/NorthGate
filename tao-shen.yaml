@@ -83,10 +83,12 @@ proxy-groups:
   - name: NorthGate
     type: "select"
     proxies:
+        - "trojan"
+        - "ipssh"
         - "northgate"
         - "139.180.186.194"
-        - "ipssh"
-        - "trojan"
+        
+        
         
 
 
