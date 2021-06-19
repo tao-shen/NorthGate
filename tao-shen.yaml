@@ -81,7 +81,11 @@ proxies:
 
 proxy-groups:
   - name: NorthGate
-    type: "select"
+    # type: "select"
+    # type: "fallback"
+    type: "url-test"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
     proxies:
         - "trojan"
         - "ipssh"
