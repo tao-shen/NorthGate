@@ -42,7 +42,7 @@ proxies:
   #   alterId: 233
   #   cipher: "aes-128-gcm"
 
-  - name: northgate
+  - name: cloudflare
     type: vmess
     server: tech.inorthgate.com
     port: 443
@@ -62,15 +62,15 @@ proxies:
     sni: tech.taoshen.pro
 
 
-  - name: ipssh
-    type: vmess
-    server: 139.180.186.194.ipssh.net
-    port: 666
-    uuid: "24813255-228d-b0e0-c3fa-e5d4c9defda1"
-    alterId: 233
-    cipher: "aes-128-gcm"
+#   - name: ipssh
+#     type: vmess
+#     server: 139.180.186.194.ipssh.net
+#     port: 666
+#     uuid: "24813255-228d-b0e0-c3fa-e5d4c9defda1"
+#     alterId: 233
+#     cipher: "aes-128-gcm"
 
-  - name: 139.180.186.194
+  - name: vultr
     type: vmess
     server: 139.180.186.194
     port: 666
@@ -88,9 +88,9 @@ proxy-groups:
     interval: 600
     proxies:
         - "trojan"
-        - "ipssh"
-        - "northgate"
-        - "139.180.186.194"
+#         - "ipssh"
+        - "cloudflare"
+        - "vultr"
         
         
         
